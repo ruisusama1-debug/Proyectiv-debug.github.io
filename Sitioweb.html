@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desarrollo de un Sitio Web Profesional | DEVWEB</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --profundo: #07191F;
+    --petroleo: #0B2A33;
+    --lagoon:   #14505C;
+    --ola:      #1E7A85;
+    --hielo:    #E8F1F2;
+    --bruma:    #9FBFC4;
+    --sol:      #FFB020;
+    --solclaro: #FFC95C;
+    --aqua:     #5ED3C8;
+    --linea:    rgba(159,191,196,.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body { font-family: 'Manrope', sans-serif; background: var(--profundo); color: var(--hielo); line-height: 1.7; overflow-x: hidden; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 600; line-height: 1.1; }
+  a { color: inherit; }
+  a:focus-visible { outline: 2px solid var(--sol); outline-offset: 3px; }
+  ::selection { background: var(--sol); color: var(--profundo); }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--aqua); text-transform: uppercase; }
+  .em { font-style: italic; color: var(--sol); font-weight: 400; }
+
+  /* ===== ESPACIOS PARA IMAGEN =====
+     Cambia el nombre en src="..." por tu archivo. Si no existe,
+     se muestra el recuadro con el nombre esperado. */
+  .frame { position: relative; overflow: hidden; background: radial-gradient(circle at 30% 20%, rgba(94,211,200,.14), transparent 60%), var(--petroleo); border: 1px dashed rgba(94,211,200,.35); }
+  .frame .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font: 12px/1.6 ui-monospace, monospace; color: var(--aqua); }
+  .frame img { position: relative; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ===== MENÚ ===== */
+  .main-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(7,25,31,.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--linea); }
+  .main-nav { max-width: 1180px; height: 76px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo svg { flex-shrink: 0; }
+  .logo strong { display: block; font: 600 17px 'Fraunces', serif; letter-spacing: .2em; }
+  .logo small { display: block; font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--bruma); }
+  .nav-menu { display: flex; gap: 34px; list-style: none; }
+  .nav-link { text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--bruma); transition: color .2s; }
+  .nav-link:hover, .nav-link.active { color: var(--sol); }
+  .nav-button { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 11px 22px; border: 1px solid var(--sol); border-radius: 999px; color: var(--sol); transition: .25s; }
+  .nav-button:hover { background: var(--sol); color: var(--profundo); }
+
+  /* ===== HERO ===== */
+  .hero { position: relative; min-height: 720px; display: flex; align-items: center; padding: 150px 0 100px; overflow: hidden; }
+  .hero .frame { position: absolute; inset: 0; border: 0; }
+  .hero .frame img { opacity: .45; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, var(--profundo) 15%, rgba(7,25,31,.7) 60%, rgba(20,80,92,.45)); }
+  .hero-content { position: relative; max-width: 760px; }
+  .hero h1 { font-size: clamp(42px, 6.5vw, 78px); letter-spacing: -.02em; margin: 22px 0 26px; }
+  .hero-text { font-size: 18px; color: var(--bruma); max-width: 600px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+  .btn { display: inline-block; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 16px 30px; border-radius: 999px; transition: .25s; }
+  .btn-solid { background: var(--sol); color: var(--profundo); }
+  .btn-solid:hover { background: var(--solclaro); }
+  .btn-line { border: 1px solid var(--bruma); color: var(--hielo); }
+  .btn-line:hover { border-color: var(--sol); color: var(--sol); }
+
+  /* Barra de las 5 etapas */
+  .hero-steps { position: relative; margin-top: 70px; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--linea); }
+  .hero-steps a { text-decoration: none; padding: 20px 16px 0 0; font-size: 13px; font-weight: 600; color: var(--bruma); transition: color .2s; }
+  .hero-steps a b { display: block; font: 600 22px 'Fraunces', serif; color: var(--sol); }
+  .hero-steps a:hover { color: var(--hielo); }
+
+  /* ===== SECCIONES ===== */
+  section { padding: 110px 0; }
+  .section-title { max-width: 720px; margin-bottom: 56px; }
+  .section-title.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .section-title h2 { font-size: clamp(32px, 4.2vw, 52px); letter-spacing: -.01em; margin-top: 16px; }
+  .alt { background: var(--petroleo); }
+
+  /* Introducción */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .concept-text h3 { font-size: 28px; margin-bottom: 20px; }
+  .concept-text p { color: var(--bruma); margin-bottom: 18px; }
+  .concept-image { aspect-ratio: 4 / 5; border-radius: 24px; }
+
+  /* Etapas */
+  .stage { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 40px; padding: 48px 0; border-top: 1px solid var(--linea); align-items: start; }
+  .stage:last-child { border-bottom: 1px solid var(--linea); }
+  .stage .num { font: 400 56px/1 'Fraunces', serif; color: var(--sol); }
+  .stage h3 { font-size: 30px; margin-bottom: 12px; }
+  .stage p { color: var(--bruma); }
+  .stage ul { list-style: none; display: grid; gap: 10px; }
+  .stage li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--hielo); }
+  .stage li::before { content: ""; position: absolute; left: 0; top: 10px; width: 10px; height: 2px; background: var(--aqua); }
+  .stage .out { margin-top: 18px; font-size: 13px; color: var(--aqua); font-weight: 600; }
+
+  /* Herramientas */
+  .components { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: center; }
+  .components-image { aspect-ratio: 1 / 1; border-radius: 24px; }
+  .components-content h2 { font-size: clamp(30px, 3.8vw, 46px); margin: 16px 0 20px; }
+  .components-content > p { color: var(--bruma); margin-bottom: 32px; }
+  .component-list { display: grid; }
+  .component-list > div { display: grid; grid-template-columns: 56px 1fr; padding: 18px 0; border-top: 1px solid var(--linea); }
+  .component-list > div:last-child { border-bottom: 1px solid var(--linea); }
+  .component-list strong { font: 600 20px 'Fraunces', serif; color: var(--sol); }
+  .component-list h3 { font: 700 16px 'Manrope', sans-serif; margin-bottom: 2px; }
+  .component-list p { font-size: 14px; color: var(--bruma); }
+
+  /* Calidad */
+  .quality-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .quality-grid article { padding: 30px 26px; border: 1px solid var(--linea); border-radius: 20px; background: rgba(20,80,92,.18); transition: border-color .3s, transform .3s; }
+  .quality-grid article:hover { border-color: var(--sol); transform: translateY(-4px); }
+  .quality-grid h3 { font-size: 22px; margin-bottom: 10px; }
+  .quality-grid p { font-size: 14px; color: var(--bruma); }
+
+  /* Banner */
+  .visual-section { position: relative; min-height: 460px; display: flex; align-items: center; padding: 0; overflow: hidden; }
+  .visual-section .frame { position: absolute; inset: 0; border: 0; border-radius: 0; }
+  .visual-section .frame img { opacity: .5; }
+  .visual-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,25,31,.92), rgba(20,80,92,.4)); }
+  .visual-content { position: relative; }
+  .visual-content h2 { font-size: clamp(36px, 6vw, 72px); margin-top: 16px; }
+
+  /* Futuro / conclusión */
+  .future-content h2 { font-size: clamp(32px, 4.2vw, 52px); margin: 16px 0 24px; }
+  .future-text { color: var(--bruma); font-size: 17px; max-width: 520px; }
+  .future-image { aspect-ratio: 4 / 3; border-radius: 24px; }
+
+  footer { border-top: 1px solid var(--linea); padding: 56px 32px; text-align: center; }
+  footer h3 { font-size: 22px; letter-spacing: .2em; }
+  footer h3 span { color: var(--sol); }
+  footer p { margin-top: 10px; font-size: 12px; letter-spacing: .15em; color: var(--bruma); }
+  footer small { display: block; margin-top: 22px; font-size: 12px; color: #6F9097; }
+
+  @media (max-width: 960px) {
+    .nav-menu { display: none; }
+    .hero-steps { grid-template-columns: repeat(2, 1fr); gap: 4px 20px; }
+    .two-col, .components { grid-template-columns: 1fr; gap: 40px; }
+    .stage { grid-template-columns: 56px 1fr; gap: 20px; }
+    .stage ul { grid-column: 2; }
+    .stage .num { font-size: 40px; }
+    .quality-grid { grid-template-columns: 1fr 1fr; }
+    section { padding: 80px 0; }
+  }
+  @media (max-width: 560px) { .quality-grid { grid-template-columns: 1fr; } .wrap, .main-nav { padding: 0 20px; } .nav-button { display: none; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+
+<body>
+
+<!-- ===================== MENÚ ===================== -->
+<header class="main-header">
+  <nav class="main-nav">
+    <a href="index.html" class="logo">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <path d="M11 8L4 15L11 22" stroke="#FFB020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 8L26 15L19 22" stroke="#5ED3C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M17 6L13 24" stroke="#E8F1F2" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span><strong></strong><small></small></span>
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Inicio</a></li>
+      <li><a href="Desarrollo.html" class="nav-link active">Desarrollo</a></li>
+      <li><a href="futuro.html" class="nav-link">FUTURO</a></li>
+      <li><a href="Com.html" class="nav-link">COMPONENTES</a></li>
+    </ul>
+
+    <a href="Encuesta.html" class="nav-button">Encuesta</a>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="inicio">
+  <div class="frame">
+    <div class="ph">Espacio para imagen de fondo<br>web-hero.jpg</div>
+    <img src="webos.jpg" alt="Equipo desarrollando un sitio web" onerror="this.style.display='none'">
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="wrap" style="position:relative; width:100%;">
+    <div class="hero-content">
+      <p class="eyebrow">Web Development Process</p>
+      <h1>El desarrollo de un <span class="em">sitio web</span> profesional</h1>
+      <p class="hero-text">
+        Un sitio web profesional no se improvisa. Se construye siguiendo cinco etapas
+        ordenadas, desde la idea inicial hasta su publicación, para lograr un producto
+        claro, rápido, seguro y fácil de usar.
+      </p>
+      <div class="hero-actions">
+        <a href="#etapas" class="btn btn-solid">Ver las etapas</a>
+        <a href="#introduccion" class="btn btn-line">Introducción</a>
+      </div>
+    </div>
+
+    <div class="hero-steps">
+      <a href="#etapa-1"><b>1</b>Planificación</a>
+      <a href="#etapa-2"><b>2</b>Diseño</a>
+      <a href="#etapa-3"><b>3</b>Desarrollo</a>
+      <a href="#etapa-4"><b>4</b>Pruebas</a>
+      <a href="#etapa-5"><b>5</b>Publicación</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INTRODUCCIÓN ===================== -->
+<section id="introduccion">
+  <div class="wrap two-col">
+    <div class="concept-text">
+      <p class="eyebrow">Introducción</p>
+      <h2 style="font-size:clamp(32px,4vw,48px); margin:16px 0 28px;">Más que código: <span class="em">un proceso</span></h2>
+      <h3>¿Qué hace profesional a un sitio web?</h3>
+      <p>
+        Un sitio profesional responde a objetivos claros: atraer a un público, comunicar
+        un mensaje o ofrecer un servicio. Para lograrlo, el trabajo se divide en etapas
+        y cada una se revisa antes de avanzar a la siguiente.
+      </p>
+      <p>
+        En este proceso participan perfiles distintos: quien analiza las necesidades,
+        quien diseña la experiencia, quien programa, quien prueba y quien publica y
+        mantiene el sitio. Trabajar así reduce errores, ahorra tiempo y mejora el resultado final.
+      </p>
+      <p>
+        Hoy, además, se trabaja de forma iterativa: se publica una primera versión y
+        se mejora de manera continua con los comentarios de los usuarios.
+      </p>
+    </div>
+    <div class="frame concept-image">
+      <div class="ph">Espacio para imagen<br>web-intro.jpg</div>
+      <img src="iawebos.jpg" alt="Persona trabajando en el diseño de un sitio web" onerror="this.style.display='none'">
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LAS 5 ETAPAS ===================== -->
+<section id="etapas" class="alt">
+  <div class="wrap">
+    <div class="section-title">
+      <p class="eyebrow">Las cinco etapas</p>
+      <h2>Del primer boceto <span class="em">al sitio en línea</span></h2>
+    </div>
+
+    <div class="stage" id="etapa-1">
+      <div class="num">1</div>
+      <div>
+        <h3>Planificación</h3>
+        <p>Se define qué problema resolverá el sitio, para quién y con qué recursos. Es la base de todo el proyecto: un buen plan evita rehacer el trabajo más adelante.</p>
+        <p class="out">Resultado: documento de requisitos y cronograma.</p>
+      </div>
+      <ul>
+        <li>Objetivos del sitio y público al que va dirigido</li>
+        <li>Análisis de la competencia y referencias</li>
+        <li>Mapa del sitio y lista de funciones</li>
+        <li>Presupuesto, tiempos y responsables</li>
+      </ul>
+    </div>
+
+    <div class="stage" id="etapa-2">
+      <div class="num">2</div>
+      <div>
+        <h3>Diseño</h3>
+        <p>Se transforma el plan en una propuesta visual y de navegación. Se cuida la experiencia de usuario (UX) y la interfaz (UI) para que el sitio sea claro y atractivo.</p>
+        <p class="out">Resultado: wireframes y prototipo navegable.</p>
+      </div>
+      <ul>
+        <li>Wireframes de baja fidelidad para cada página</li>
+        <li>Paleta de colores, tipografías y componentes</li>
+        <li>Diseño adaptable a celular, tableta y computadora</li>
+        <li>Validación del prototipo con usuarios reales</li>
+      </ul>
+    </div>
+
+    <div class="stage" id="etapa-3">
+      <div class="num">3</div>
+      <div>
+        <h3>Desarrollo</h3>
+        <p>Se programa el sitio. El frontend construye lo que ve el usuario con HTML, CSS y JavaScript; el backend gestiona la lógica, los servidores y la base de datos.</p>
+        <p class="out">Resultado: sitio funcional en entorno de desarrollo.</p>
+      </div>
+      <ul>
+        <li>Maquetación responsive y componentes reutilizables</li>
+        <li>Programación de formularios, cuentas y consultas</li>
+        <li>Conexión con bases de datos y APIs</li>
+        <li>Control de versiones con Git y revisión de código</li>
+      </ul>
+    </div>
+
+    <div class="stage" id="etapa-4">
+      <div class="num">4</div>
+      <div>
+        <h3>Pruebas</h3>
+        <p>Antes de publicar se verifica que todo funcione como se espera. Se buscan errores, se mide la velocidad y se comprueba la seguridad en distintos navegadores y dispositivos.</p>
+        <p class="out">Resultado: informe de pruebas y errores corregidos.</p>
+      </div>
+      <ul>
+        <li>Pruebas funcionales: enlaces, formularios y flujos</li>
+        <li>Compatibilidad entre navegadores y dispositivos</li>
+        <li>Rendimiento, accesibilidad y seguridad</li>
+        <li>Pruebas de aceptación con el cliente</li>
+      </ul>
+    </div>
+
+    <div class="stage" id="etapa-5">
+      <div class="num">5</div>
+      <div>
+        <h3>Publicación</h3>
+        <p>El sitio se sube a un servidor y queda disponible en internet con su dominio y su certificado de seguridad. Después se monitorea y se mantiene actualizado.</p>
+        <p class="out">Resultado: sitio en línea y plan de mantenimiento.</p>
+      </div>
+      <ul>
+        <li>Contratación de dominio y alojamiento (hosting)</li>
+        <li>Certificado HTTPS y configuración del servidor</li>
+        <li>Posicionamiento en buscadores (SEO) y analítica</li>
+        <li>Copias de seguridad y actualizaciones periódicas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HERRAMIENTAS ===================== -->
+<section id="herramientas">
+  <div class="wrap components">
+    <div class="frame components-image">
+      <div class="ph">Espacio para imagen<br>web-herramientas.jpg</div>
+      <img src="webitoos.jpg" alt="Herramientas de desarrollo web" onerror="this.style.display='none'">
+    </div>
+
+    <div class="components-content">
+      <p class="eyebrow">Herramientas</p>
+      <h2>Qué se usa <span class="em">en cada etapa</span></h2>
+      <p>Cada fase del proceso cuenta con herramientas especializadas que ayudan a trabajar de forma organizada y en equipo.</p>
+
+      <div class="component-list">
+        <div><strong>1</strong><div><h3>Planificación</h3><p>Trello, Notion, Jira y hojas de cálculo.</p></div></div>
+        <div><strong>2</strong><div><h3>Diseño</h3><p>Figma, Adobe XD y herramientas de prototipado.</p></div></div>
+        <div><strong>3</strong><div><h3>Desarrollo</h3><p>VS Code, Git y GitHub, Node.js y frameworks como React.</p></div></div>
+        <div><strong>4</strong><div><h3>Pruebas</h3><p>Lighthouse, Jest, Cypress y DevTools del navegador.</p></div></div>
+        <div><strong>5</strong><div><h3>Publicación</h3><p>Netlify, Vercel, servicios en la nube y paneles de hosting.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CALIDAD ===================== -->
+<section id="calidad" class="alt">
+  <div class="wrap">
+    <div class="section-title center">
+      <p class="eyebrow">Calidad profesional</p>
+      <h2>Lo que distingue a un <span class="em">buen sitio</span></h2>
+    </div>
+
+    <div class="quality-grid">
+      <article>
+        <h3>Rendimiento</h3>
+        <p>Carga rápida gracias a imágenes optimizadas, código liviano y uso de caché.</p>
+      </article>
+      <article>
+        <h3>Seguridad</h3>
+        <p>HTTPS, validación de datos y protección de contraseñas frente a ataques comunes.</p>
+      </article>
+      <article>
+        <h3>Accesibilidad</h3>
+        <p>Buen contraste, textos alternativos y navegación por teclado para todas las personas.</p>
+      </article>
+      <article>
+        <h3>SEO</h3>
+        <p>Estructura clara y contenido relevante para que los buscadores encuentren el sitio.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BANNER ===================== -->
+<section class="visual-section">
+  <div class="frame">
+    <div class="ph">Espacio para imagen de banner<br>web-banner.jpg</div>
+    <img src="web-banner.jpg" alt="Sitio web en distintos dispositivos" onerror="this.style.display='none'">
+  </div>
+  <div class="visual-overlay"></div>
+  <div class="wrap visual-content" style="width:100%;">
+    <p class="eyebrow">Proceso completo</p>
+    <h2>Planifica. Diseña.<br>Desarrolla. Prueba.<br><span class="em">Publica.</span></h2>
+  </div>
+</section>
+
+<!-- ===================== CONCLUSIÓN ===================== -->
+<section id="futuro">
+  <div class="wrap two-col">
+    <div class="future-content">
+      <p class="eyebrow">Conclusión</p>
+      <h2>Un proceso que <span class="em">nunca termina</span></h2>
+      <p class="future-text">
+        Publicar el sitio no es el final, sino el inicio de una mejora constante.
+        Con el apoyo de la inteligencia artificial, la automatización y la nube,
+        cada etapa será más ágil, pero seguirá siendo esencial planificar, diseñar,
+        programar, probar y publicar con criterio profesional.
+      </p>
+      <div class="hero-actions">
+        <a href="#inicio" class="btn btn-line">Volver arriba</a>
+      </div>
+    </div>
+    <div class="frame future-image">
+      <div class="ph">Espacio para imagen<br>web-futuro.jpg</div>
+      <img src="finalweb.jpg" alt="Futuro del desarrollo web" onerror="this.style.display='none'">
+    </div>
+  </div>
+</section>
+
+
+
+</body>
+</html>

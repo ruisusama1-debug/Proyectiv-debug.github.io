@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta | DEVWEB</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --profundo:#07191F; --petroleo:#0B2A33; --lagoon:#14505C; --ola:#1E7A85;
+    --hielo:#E8F1F2; --bruma:#9FBFC4; --sol:#FFB020; --solclaro:#FFC95C; --aqua:#5ED3C8;
+    --linea:rgba(159,191,196,.18); --ok:#5ED3C8; --mal:#FF7A7A;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; scroll-padding-top:110px; }
+  body { font-family:'Manrope',sans-serif; background:var(--profundo); color:var(--hielo); line-height:1.7;
+         background-image:radial-gradient(circle at 15% 8%,rgba(94,211,200,.10),transparent 30%),radial-gradient(circle at 85% 30%,rgba(255,176,32,.06),transparent 32%); }
+  h1,h2,h3 { font-family:'Fraunces',serif; font-weight:600; line-height:1.15; }
+  a { color:inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible + label, textarea:focus-visible, .btn:focus-visible { outline:2px solid var(--sol); outline-offset:3px; }
+  ::selection { background:var(--sol); color:var(--profundo); }
+  .em { font-style:italic; font-weight:400; color:var(--sol); }
+  .eyebrow { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--aqua); }
+
+  /* MENÚ */
+  header { position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(7,25,31,.9); backdrop-filter:blur(14px); border-bottom:1px solid var(--linea); }
+  .nav { max-width:1100px; height:76px; margin:auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .logo strong { display:block; font:600 17px 'Fraunces',serif; letter-spacing:.2em; }
+  .logo small { display:block; font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:var(--bruma); }
+  .menu { display:flex; gap:28px; list-style:none; }
+  .menu a { text-decoration:none; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--bruma); transition:color .2s; }
+  .menu a:hover, .menu a.on { color:var(--sol); }
+
+  /* Barra de progreso */
+  .progress { position:fixed; top:76px; left:0; right:0; height:4px; background:rgba(159,191,196,.12); z-index:49; }
+  .progress i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--sol),var(--aqua)); transition:width .3s; }
+
+  main { max-width:860px; margin:0 auto; padding:150px 28px 90px; }
+  .intro h1 { font-size:clamp(36px,6vw,60px); letter-spacing:-.02em; margin:16px 0 20px; }
+  .intro p { color:var(--bruma); font-size:17px; max-width:640px; }
+  .pages { display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; }
+  .pages a { text-decoration:none; font-size:12px; font-weight:600; padding:8px 14px; border:1px solid var(--linea); border-radius:999px; color:var(--bruma); transition:.2s; }
+  .pages a:hover { border-color:var(--sol); color:var(--sol); }
+
+  .who { margin-top:44px; padding:26px; border:1px solid var(--linea); border-radius:20px; background:rgba(20,80,92,.18); }
+  .who label { display:block; font-size:13px; font-weight:700; margin-bottom:8px; }
+  input[type=text] { width:100%; padding:14px 16px; border-radius:12px; border:1px solid var(--linea); background:var(--petroleo); color:var(--hielo); font:inherit; }
+  input[type=text]:focus, textarea:focus { outline:2px solid var(--sol); border-color:transparent; }
+
+  /* Bloques de preguntas */
+  .block { margin-top:64px; }
+  .block-head { display:flex; align-items:baseline; gap:18px; padding-bottom:18px; border-bottom:1px solid var(--linea); margin-bottom:8px; }
+  .block-head .n { font:400 44px/1 'Fraunces',serif; color:var(--sol); }
+  .block-head h2 { font-size:28px; }
+  .block-head p { font-size:13px; color:var(--bruma); }
+
+  fieldset { border:0; padding:30px 0; border-bottom:1px solid var(--linea); }
+  fieldset.missing legend { color:var(--mal); }
+  legend { font:600 20px/1.35 'Fraunces',serif; margin-bottom:16px; padding:0; }
+  legend small { display:block; font:600 11px 'Manrope',sans-serif; letter-spacing:.1em; text-transform:uppercase; color:var(--aqua); margin-bottom:6px; }
+  .opts { display:grid; gap:10px; }
+  .opts.likert { grid-template-columns:repeat(5,1fr); }
+  .opt input { position:absolute; opacity:0; }
+  .opt label { display:block; padding:14px 18px; border:1px solid var(--linea); border-radius:14px; cursor:pointer; font-size:15px; background:rgba(11,42,51,.6); transition:.2s; }
+  .opt label:hover { border-color:var(--aqua); }
+  .opt input:checked + label { border-color:var(--sol); background:rgba(255,176,32,.12); color:var(--hielo); }
+  .opt input:focus-visible + label { outline:2px solid var(--sol); outline-offset:2px; }
+  .likert .opt label { text-align:center; padding:14px 6px; }
+  .likert-legend { display:flex; justify-content:space-between; font-size:12px; color:var(--bruma); margin-top:8px; }
+  textarea { width:100%; min-height:130px; padding:14px 16px; border-radius:14px; border:1px solid var(--linea); background:var(--petroleo); color:var(--hielo); font:inherit; resize:vertical; }
+
+  .actions { margin-top:44px; display:flex; flex-wrap:wrap; align-items:center; gap:16px; }
+  .btn { display:inline-block; font:700 12px 'Manrope',sans-serif; letter-spacing:.1em; text-transform:uppercase; padding:16px 32px; border-radius:999px; border:1px solid transparent; cursor:pointer; text-decoration:none; transition:.25s; }
+  .btn-solid { background:var(--sol); color:var(--profundo); }
+  .btn-solid:hover { background:var(--solclaro); }
+  .btn-line { background:transparent; border-color:var(--bruma); color:var(--hielo); }
+  .btn-line:hover { border-color:var(--sol); color:var(--sol); }
+  #aviso { color:var(--mal); font-size:14px; font-weight:600; }
+
+  /* Resultados */
+  #resultados { display:none; margin-top:20px; }
+  .score { padding:44px 36px; border:1px solid rgba(94,211,200,.3); border-radius:28px; background:linear-gradient(145deg,rgba(20,80,92,.5),rgba(7,25,31,.9)); text-align:center; }
+  .score .big { font:400 86px/1 'Fraunces',serif; color:var(--sol); margin:14px 0 6px; }
+  .score p { color:var(--bruma); max-width:520px; margin:0 auto; }
+  .bar { height:8px; border-radius:99px; background:rgba(159,191,196,.15); margin:24px auto 0; max-width:420px; overflow:hidden; }
+  .bar i { display:block; height:100%; background:linear-gradient(90deg,var(--sol),var(--aqua)); }
+  .review { margin-top:34px; display:grid; gap:12px; }
+  .rv { padding:18px 20px; border-radius:16px; border:1px solid var(--linea); background:rgba(11,42,51,.6); font-size:14px; }
+  .rv b { display:block; font:600 16px 'Fraunces',serif; margin-bottom:6px; }
+  .rv .ok { color:var(--ok); } .rv .bad { color:var(--mal); }
+  .rv small { color:var(--bruma); }
+  .opinion { margin-top:30px; padding:26px; border:1px solid var(--linea); border-radius:20px; background:rgba(20,80,92,.18); font-size:14px; }
+  .opinion h3 { font-size:20px; margin-bottom:10px; }
+  .opinion li { margin-left:18px; color:var(--bruma); }
+  .opinion li strong { color:var(--hielo); }
+
+  footer { border-top:1px solid var(--linea); padding:36px 20px; text-align:center; font-size:12px; color:#6F9097; }
+
+  @media (max-width:760px) { .menu { display:none; } .opts.likert { grid-template-columns:repeat(5,1fr); gap:6px; } .block-head .n { font-size:34px; } .block-head h2 { font-size:22px; } }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; scroll-behavior:auto !important; } }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <path d="M11 8L4 15L11 22" stroke="#FFB020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 8L26 15L19 22" stroke="#5ED3C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M17 6L13 24" stroke="#E8F1F2" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span><strong>DEVWEB</strong><small>Desarrollo Web</small></span>
+    </a>
+    <ul class="menu">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="Desarrollo.html">Desarrollo</a></li>
+      <li><a href="Sitioweb.html">Sitio web profesional</a></li>
+      <li><a href="Futuro.html">Futuro</a></li>
+      <li><a href="Encuesta.html" class="on">Encuesta</a></li>
+    </ul>
+  </div>
+  <div class="progress" aria-hidden="true"><i id="pbar"></i></div>
+</header>
+
+<main>
+
+  <section class="intro">
+    <p class="eyebrow">Encuesta final</p>
+    <h1>¿Qué aprendiste sobre <span class="em">desarrollo web</span>?</h1>
+    <p>Responde estas preguntas basadas en todas las páginas del proyecto. Al terminar verás tu resultado y las respuestas correctas. Toma unos 5 minutos.</p>
+    <div class="pages">
+      <a href="index.html">Inicio</a>
+      <a href="Desarrollo.html">Desarrollo web moderno</a>
+      <a href="Sitioweb.html">Sitio web profesional (5 etapas)</a>
+      <a href="Futuro.html">Desarrollo web del futuro</a>
+    </div>
+  </section>
+
+  <form id="form" novalidate>
+    <div class="who">
+      <label for="nombre">Tu nombre (opcional)</label>
+      <input type="text" id="nombre" autocomplete="name" placeholder="Escribe tu nombre">
+      <label for="email" style="margin-top:18px">Tu correo (opcional)</label>
+      <input type="text" id="email" name="email" inputmode="email" autocomplete="email" placeholder="nombre@correo.com">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+    </div>
+
+    <div id="preguntas"></div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-solid">Enviar encuesta</button>
+      <span id="aviso" role="alert"></span>
+    </div>
+  </form>
+
+  <section id="resultados" aria-live="polite"></section>
+
+</main>
+
+<footer>© 2026 | Proyecto Tecnológico DEVWEB — Encuesta</footer>
+
+<script>
+  /* ============ PREGUNTAS ============ */
+  // tipo "quiz": tiene respuesta correcta (c = índice de la opción correcta)
+  // tipo "likert": escala 1 a 5   |   tipo "opinion": elegir una opción   |   tipo "texto": respuesta libre
+  const bloques = [
+    {
+      titulo: 'Desarrollo web moderno', fuente: 'Páginas: Inicio y Desarrollo',
+      preguntas: [
+        { t:'quiz', q:'¿Qué parte de un sitio web ve y usa directamente el usuario?', o:['Frontend','Backend','Base de datos','Servidor'], c:0 },
+        { t:'quiz', q:'¿Qué lenguaje se usa para dar estructura al contenido de una página?', o:['CSS','HTML','Git','SQL'], c:1 },
+        { t:'quiz', q:'¿Cuál es la función principal del backend?', o:['Elegir los colores del sitio','Crear animaciones','Procesar solicitudes, aplicar la lógica y acceder a los datos','Diseñar el logotipo'], c:2 }
+      ]
+    },
+    {
+      titulo: 'Las 5 etapas del sitio profesional', fuente: 'Página: Sitio web profesional',
+      preguntas: [
+        { t:'quiz', q:'¿Cuál es la primera etapa en el desarrollo de un sitio web profesional?', o:['Publicación','Pruebas','Planificación','Desarrollo'], c:2 },
+        { t:'quiz', q:'¿En qué etapa se crean los wireframes y el prototipo navegable?', o:['Diseño','Pruebas','Publicación','Planificación'], c:0 },
+        { t:'quiz', q:'¿En qué etapa se busca errores y se mide la velocidad y la seguridad antes de publicar?', o:['Diseño','Desarrollo','Pruebas','Planificación'], c:2 },
+        { t:'quiz', q:'¿Qué se contrata o configura durante la etapa de Publicación?', o:['Wireframes y paleta de colores','Dominio, hosting y certificado HTTPS','El mapa del sitio','Los casos de prueba'], c:1 }
+      ]
+    },
+    {
+      titulo: 'Tecnologías y buenas prácticas', fuente: 'Páginas: Desarrollo y Sitio web profesional',
+      preguntas: [
+        { t:'quiz', q:'¿Qué herramienta se utiliza para el control de versiones del código?', o:['Figma','Lighthouse','Git','Trello'], c:2 },
+        { t:'quiz', q:'¿Qué significa que un sitio sea "responsive"?', o:['Que responde correos automáticamente','Que se adapta a distintos tamaños de pantalla','Que solo funciona en computadoras','Que carga sin imágenes'], c:1 },
+        { t:'quiz', q:'¿Cuál de estas prácticas NO es recomendable en seguridad web?', o:['Usar HTTPS','Validar los datos del usuario','Guardar las contraseñas en texto plano','Actualizar las dependencias'], c:2 }
+      ]
+    },
+    {
+      titulo: 'Desarrollo web del futuro', fuente: 'Página: Futuro',
+      preguntas: [
+        { t:'quiz', q:'¿Qué permite una aplicación web progresiva (PWA)?', o:['Solo verse en televisores','Instalarse y funcionar incluso sin conexión','Reemplazar al navegador','Eliminar la necesidad de servidores'], c:1 },
+        { t:'quiz', q:'¿Para qué sirve WebXR?', o:['Para guardar bases de datos','Para optimizar imágenes','Para crear experiencias de realidad virtual y aumentada en el navegador','Para enviar correos'], c:2 }
+      ]
+    },
+    {
+      titulo: 'Tu opinión', fuente: 'Estas preguntas no se califican',
+      preguntas: [
+        { t:'opinion', id:'etapa', q:'¿Cuál etapa del desarrollo te parece la más importante?', o:['Planificación','Diseño','Desarrollo','Pruebas','Publicación'] },
+        { t:'opinion', id:'tema', q:'¿Qué tema te interesó más?', o:['Frontend y diseño','Backend y bases de datos','Inteligencia artificial','Web inmersiva (VR/AR)','Seguridad y accesibilidad'] },
+        { t:'likert', id:'claridad', q:'La información de las páginas fue clara y fácil de entender.' },
+        { t:'likert', id:'diseno', q:'El diseño del sitio fue atractivo y fácil de navegar.' },
+        { t:'texto', id:'coment', q:'¿Qué mejorarías o qué te gustaría aprender después? (opcional)' }
+      ]
+    }
+  ];
+
+  /* ============ RENDER ============ */
+  const cont = document.getElementById('preguntas');
+  const lista = [];            // lista plana de preguntas con su id
+  let qn = 0;
+
+  bloques.forEach((b, bi) => {
+    const sec = document.createElement('section');
+    sec.className = 'block';
+    sec.innerHTML = `<div class="block-head"><span class="n">${bi + 1}</span><div><h2>${b.titulo}</h2><p>${b.fuente}</p></div></div>`;
+
+    b.preguntas.forEach(p => {
+      p.id = p.id || ('q' + (++qn));
+      p.bloque = b.titulo;
+      lista.push(p);
+
+      const fs = document.createElement('fieldset');
+      fs.id = 'f-' + p.id;
+      const tag = p.t === 'quiz' ? 'Pregunta ' + qn : (p.t === 'texto' ? 'Comentario' : 'Opinión');
+      let html = `<legend><small>${tag}</small>${p.q}</legend>`;
+
+      if (p.t === 'quiz' || p.t === 'opinion') {
+        html += '<div class="opts">' + p.o.map((txt, i) =>
+          `<div class="opt"><input type="radio" name="${p.id}" id="${p.id}-${i}" value="${i}"><label for="${p.id}-${i}">${txt}</label></div>`).join('') + '</div>';
+      } else if (p.t === 'likert') {
+        html += '<div class="opts likert">' + [1,2,3,4,5].map(i =>
+          `<div class="opt"><input type="radio" name="${p.id}" id="${p.id}-${i}" value="${i}"><label for="${p.id}-${i}">${i}</label></div>`).join('') + '</div>' +
+          '<div class="likert-legend"><span>Nada de acuerdo</span><span>Totalmente de acuerdo</span></div>';
+      } else {
+        html += `<textarea name="${p.id}" id="${p.id}" placeholder="Escribe aquí tu comentario"></textarea>`;
+      }
+      fs.innerHTML = html;
+      sec.appendChild(fs);
+    });
+    cont.appendChild(sec);
+  });
+
+  /* ============ PROGRESO ============ */
+  const requeridas = lista.filter(p => p.t !== 'texto');
+  const form = document.getElementById('form');
+  const pbar = document.getElementById('pbar');
+
+  function respondida(p) { return !!form.querySelector(`input[name="${p.id}"]:checked`); }
+  function actualizar() {
+    const hechas = requeridas.filter(respondida).length;
+    pbar.style.width = (hechas / requeridas.length * 100) + '%';
+    requeridas.forEach(p => { if (respondida(p)) document.getElementById('f-' + p.id).classList.remove('missing'); });
+  }
+  form.addEventListener('change', actualizar);
+
+  /* ============ ENVÍO Y RESULTADOS ============ */
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let textoResultado = '';
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const aviso = document.getElementById('aviso');
+    const faltan = requeridas.filter(p => !respondida(p));
+    requeridas.forEach(p => document.getElementById('f-' + p.id).classList.toggle('missing', !respondida(p)));
+
+    if (faltan.length) {
+      aviso.textContent = `Te faltan ${faltan.length} pregunta${faltan.length > 1 ? 's' : ''} por responder.`;
+      document.getElementById('f-' + faltan[0].id).scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+    aviso.textContent = '';
+
+    const val = p => form.querySelector(`input[name="${p.id}"]:checked`).value;
+    const quiz = lista.filter(p => p.t === 'quiz');
+    let aciertos = 0;
+    const revision = quiz.map(p => {
+      const sel = Number(val(p));
+      const ok = sel === p.c;
+      if (ok) aciertos++;
+      return { p, sel, ok };
+    });
+
+    const nombre = form.nombre.value.trim();
+    const pct = Math.round(aciertos / quiz.length * 100);
+    const mensaje = pct >= 90 ? 'Excelente: dominas el proceso del desarrollo web.'
+                  : pct >= 70 ? 'Muy bien: tienes una base sólida del tema.'
+                  : pct >= 50 ? 'Buen avance: repasa las secciones donde fallaste.'
+                  : 'Te recomendamos volver a revisar las páginas del proyecto.';
+
+    const op = id => lista.find(p => p.id === id);
+    const etapa = op('etapa'), tema = op('tema');
+    const comentario = form.coment.value.trim();
+
+    let h = `<div class="score">
+      <p class="eyebrow">${nombre ? esc(nombre) + ', tu resultado' : 'Tu resultado'}</p>
+      <div class="big">${aciertos}/${quiz.length}</div>
+      <p>${mensaje}</p>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+    </div>
+    <div class="review">` +
+    revision.map((r, i) => `<div class="rv"><b>${i + 1}. ${esc(r.p.q)}</b>
+      ${r.ok ? `<span class="ok">✓ Correcta: ${esc(r.p.o[r.p.c])}</span>`
+             : `<span class="bad">✗ Tu respuesta: ${esc(r.p.o[r.sel])}</span><br><span class="ok">✓ Correcta: ${esc(r.p.o[r.p.c])}</span>`}
+      <br><small>${esc(r.p.bloque)}</small></div>`).join('') +
+    `</div>
+    <div class="opinion"><h3>Tu opinión</h3><ul>
+      <li>Etapa más importante: <strong>${esc(etapa.o[val(etapa)])}</strong></li>
+      <li>Tema que más te interesó: <strong>${esc(tema.o[val(tema)])}</strong></li>
+      <li>Claridad de la información: <strong>${val(op('claridad'))}/5</strong></li>
+      <li>Diseño y navegación: <strong>${val(op('diseno'))}/5</strong></li>
+      ${comentario ? `<li>Comentario: <strong>${esc(comentario)}</strong></li>` : ''}
+    </ul></div>
+    <p id="estado-envio" role="status" style="margin-top:22px;font-size:14px;color:var(--bruma)">Enviando tus respuestas…</p>
+    <div class="actions">
+      <button type="button" class="btn btn-solid" id="descargar">Descargar resultados</button>
+      <button type="button" class="btn btn-line" id="reiniciar">Hacer de nuevo</button>
+      <a href="index.html" class="btn btn-line">Volver al inicio</a>
+    </div>`;
+
+    const res = document.getElementById('resultados');
+    res.innerHTML = h;
+    res.style.display = 'block';
+    form.style.display = 'none';
+    document.querySelector('.intro').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    pbar.style.width = '100%';
+
+    textoResultado =
+`ENCUESTA DEVWEB
+Nombre: ${nombre || '(sin nombre)'}
+Puntaje: ${aciertos}/${quiz.length} (${pct}%)
+
+` + revision.map((r, i) => `${i + 1}. ${r.p.q}\n   Tu respuesta: ${r.p.o[r.sel]} ${r.ok ? '(correcta)' : '(incorrecta, correcta: ' + r.p.o[r.p.c] + ')'}`).join('\n') +
+`
+
+OPINIÓN
+Etapa más importante: ${etapa.o[val(etapa)]}
+Tema de mayor interés: ${tema.o[val(tema)]}
+Claridad: ${val(op('claridad'))}/5
+Diseño y navegación: ${val(op('diseno'))}/5
+Comentario: ${comentario || '(ninguno)'}
+`;
+
+
+    /* ============ ENVÍO A FORMSPREE ============ */
+    const FORMSPREE_URL = 'https://formspree.io/f/mppqlbre';
+    const correo = (form.email.value || '').trim();
+    const datos = {
+      _subject: 'Nueva respuesta de la encuesta DEVWEB',
+      nombre: nombre || '(sin nombre)',
+      puntaje: aciertos + '/' + quiz.length + ' (' + pct + '%)',
+      resultados: textoResultado,
+      etapa_mas_importante: etapa.o[val(etapa)],
+      tema_de_interes: tema.o[val(tema)],
+      claridad: val(op('claridad')) + '/5',
+      diseno_y_navegacion: val(op('diseno')) + '/5',
+      comentario: comentario || '(ninguno)',
+      _gotcha: form._gotcha.value
+    };
+    if (correo) datos.email = correo;
+
+    const estado = document.getElementById('estado-envio');
+    fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(datos)
+    })
+    .then(r => {
+      estado.textContent = r.ok ? '✓ Tus respuestas fueron enviadas. ¡Gracias por participar!'
+                                : 'No se pudieron enviar tus respuestas, pero puedes descargarlas abajo.';
+      estado.style.color = r.ok ? 'var(--ok)' : 'var(--mal)';
+    })
+    .catch(() => {
+      estado.textContent = 'No se pudieron enviar tus respuestas (sin conexión). Puedes descargarlas abajo.';
+      estado.style.color = 'var(--mal)';
+    });
+
+    document.getElementById('reiniciar').onclick = () => location.reload();
+    document.getElementById('descargar').onclick = () => {
+      const url = URL.createObjectURL(new Blob([textoResultado], { type:'text/plain;charset=utf-8' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = 'resultados-encuesta.txt'; a.click();
+      URL.revokeObjectURL(url);
+    };
+  });
+</script>
+</body>
+</html>

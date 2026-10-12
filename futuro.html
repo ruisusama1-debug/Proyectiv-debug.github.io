@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desarrollo Web del Futuro — DEVWEB</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
+            sans: ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            profundo: '#07191F',
+            petroleo: '#0B2A33',
+            lagoon:   '#14505C',
+            ola:      '#1E7A85',
+            hielo:    '#E8F1F2',
+            bruma:    '#9FBFC4',
+            sol:      '#FFB020',
+            solclaro: '#FFC95C',
+            aqua:     '#5ED3C8',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { scroll-padding-top: 96px; }
+    body { font-family: 'Manrope', sans-serif; background: #07191F; color: #E8F1F2; }
+    h1, h2, h3, h4 { font-family: 'Fraunces', serif; }
+
+    .glass { background: rgba(11, 42, 51, 0.72); backdrop-filter: blur(12px); border: 1px solid rgba(94, 211, 200, 0.2); }
+    .card-hover { transition: transform .3s ease, border-color .3s ease; }
+    .card-hover:hover { transform: translateY(-5px); border-color: #FFB020; }
+
+    /* Espacio para imágenes: cambia el nombre en src="..." por el de tu archivo */
+    .frame { position: relative; overflow: hidden; background: radial-gradient(circle at 30% 20%, rgba(94,211,200,.16), transparent 60%), #0B2A33; border: 1px dashed rgba(94,211,200,.4); }
+    .frame .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font: 12px/1.6 'JetBrains Mono', monospace; color: #5ED3C8; }
+    .frame img { position: relative; width: 100%; height: 100%; object-fit: cover; }
+
+    a:focus-visible { outline: 2px solid #FFB020; outline-offset: 3px; }
+    ::selection { background: #FFB020; color: #07191F; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- ===================== MENÚ ===================== -->
+  <header class="fixed top-0 inset-x-0 z-50 glass border-b border-white/10">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+          <path d="M11 8L4 15L11 22" stroke="#FFB020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 8L26 15L19 22" stroke="#5ED3C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17 6L13 24" stroke="#E8F1F2" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="leading-none">
+          <span class="block font-serif text-lg tracking-[0.2em]"></span>
+          <span class="block text-[9px] tracking-[0.25em] text-bruma uppercase"></span>
+        </span>
+      </a>
+
+      <ul class="hidden lg:flex items-center gap-9 text-xs font-semibold tracking-widest uppercase text-bruma">
+        <li><a href="index.html" class="hover:text-sol transition-colors">Inicio</a></li>
+        <li><a href="Desarrollo.html" class="hover:text-sol transition-colors">DESARROLLO</a></li>
+        <li><a href="Sitioweb.html" class="hover:text-sol transition-colors">WEB PROFESIONAL</a></li>
+        <li><a href="Com.html" class="hover:text-sol transition-colors text-sol">COMPONENTES</a></li>
+      </ul>
+
+      <a href="Encuesta.html" class="hidden sm:inline-flex border border-sol text-sol text-xs font-semibold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-sol hover:text-profundo transition-colors">
+        Encuesta →
+      </a>
+    </nav>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="inicio" class="relative overflow-hidden">
+    <div class="absolute -top-32 -right-32 w-[480px] h-[480px] bg-aqua/15 rounded-full blur-[140px]"></div>
+    <div class="absolute bottom-0 -left-24 w-[380px] h-[380px] bg-sol/10 rounded-full blur-[130px]"></div>
+
+    <div class="relative pt-40 pb-24 px-6 lg:px-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+      <div>
+        <span class="text-aqua font-semibold tracking-[0.3em] uppercase text-xs">Innovación Tecnológica</span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold mt-6 leading-[1.08]">
+          Desarrollo web <span class="italic font-normal text-sol">del futuro</span>
+        </h1>
+        <p class="mt-6 text-lg text-bruma leading-8">
+          La inteligencia artificial, la nube y las nuevas capacidades del navegador están redefiniendo cómo se construyen los sitios y aplicaciones. La web del futuro será más rápida, más inteligente, más inmersiva y accesible para todas las personas.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-4">
+          <a href="#pilares" class="inline-block px-7 py-4 bg-sol text-profundo text-xs font-bold tracking-widest uppercase rounded-full hover:bg-solclaro transition-colors">Explorar los pilares</a>
+          <a href="Encuesta.html" class="inline-block px-7 py-4 border border-bruma/50 text-xs font-bold tracking-widest uppercase rounded-full hover:border-sol hover:text-sol transition-colors">Responder encuesta</a>
+        </div>
+      </div>
+
+      <!-- Imagen destacada -->
+      <div class="frame rounded-3xl h-80 lg:h-[420px] shadow-[0_0_50px_rgba(94,211,200,0.15)]">
+        <div class="ph">Espacio para imagen<br>web-futuro.jpg</div>
+        <img src="tt.jpg" alt="Desarrollo web del futuro" onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <!-- Tecnologías clave -->
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pb-16">
+      <div class="flex flex-wrap gap-3 justify-center lg:justify-start">
+        <span class="font-mono text-xs text-aqua border border-aqua/30 rounded-lg px-3 py-2">IA generativa</span>
+        <span class="font-mono text-xs text-aqua border border-aqua/30 rounded-lg px-3 py-2">WebAssembly</span>
+        <span class="font-mono text-xs text-aqua border border-aqua/30 rounded-lg px-3 py-2">WebGPU</span>
+        <span class="font-mono text-xs text-aqua border border-aqua/30 rounded-lg px-3 py-2">WebXR</span>
+        <span class="font-mono text-xs text-aqua border border-aqua/30 rounded-lg px-3 py-2">PWA</span>
+        <span class="font-mono text-xs text-aqua border border-aqua/30 rounded-lg px-3 py-2">Edge computing</span>
+        <span class="font-mono text-xs text-aqua border border-aqua/30 rounded-lg px-3 py-2">Serverless</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PILARES ===================== -->
+  <section id="pilares" class="py-20 bg-petroleo">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <p class="text-aqua font-semibold tracking-[0.3em] uppercase text-xs">Tendencias</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold mt-4">Pilares de la nueva web</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass p-8 rounded-2xl card-hover">
+          <div class="text-4xl mb-4">🤖</div>
+          <h3 class="text-xl font-semibold mb-3 text-aqua">IA en el desarrollo</h3>
+          <p class="text-bruma text-sm leading-relaxed">Asistentes de código, generación de interfaces y pruebas automáticas aceleran el trabajo. A la vez, los sitios incorporan chatbots y recomendaciones que se adaptan a cada usuario.</p>
+        </div>
+
+        <div class="glass p-8 rounded-2xl card-hover">
+          <div class="text-4xl mb-4">🕶️</div>
+          <h3 class="text-xl font-semibold mb-3 text-aqua">Web inmersiva</h3>
+          <p class="text-bruma text-sm leading-relaxed">Con WebGL, WebGPU y WebXR, el navegador muestra entornos 3D y experiencias de realidad virtual y aumentada sin instalar nada, desde tiendas interactivas hasta aulas virtuales.</p>
+        </div>
+
+        <div class="glass p-8 rounded-2xl card-hover">
+          <div class="text-4xl mb-4">⚡</div>
+          <h3 class="text-xl font-semibold mb-3 text-aqua">Nube, Edge y PWA</h3>
+          <p class="text-bruma text-sm leading-relaxed">El código se ejecuta cerca del usuario y escala según la demanda. Las aplicaciones web progresivas se instalan, envían notificaciones y funcionan incluso sin conexión.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== IMPACTO ===================== -->
+  <section id="impacto" class="py-20 px-6 max-w-5xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-semibold mb-12 text-center">
+      El impacto de la <span class="italic font-normal text-sol">nueva web</span>
+    </h2>
+
+    <div class="space-y-10">
+
+      <div class="glass p-8 lg:p-10 rounded-3xl">
+        <h3 class="text-2xl font-semibold mb-6 border-b border-aqua/30 pb-4">¿En qué áreas se aplica?</h3>
+        <ul class="grid md:grid-cols-2 gap-6 text-bruma">
+          <li class="flex items-start gap-3"><span>🎓</span><div><strong class="text-hielo">Educación:</strong> plataformas adaptativas que ajustan los contenidos al ritmo de cada estudiante, con laboratorios virtuales.</div></li>
+          <li class="flex items-start gap-3"><span>🏥</span><div><strong class="text-hielo">Salud:</strong> citas, expedientes y telemedicina seguros, con asistentes que orientan a pacientes y personal médico.</div></li>
+          <li class="flex items-start gap-3"><span>🛒</span><div><strong class="text-hielo">Comercio electrónico:</strong> tiendas con probadores virtuales, recomendaciones personalizadas y pagos instantáneos.</div></li>
+          <li class="flex items-start gap-3"><span>🏛️</span><div><strong class="text-hielo">Gobierno y servicios:</strong> trámites en línea ágiles, transparentes y disponibles todo el día desde cualquier dispositivo.</div></li>
+        </ul>
+      </div>
+
+      <!-- Galería (espacios para imágenes) -->
+      <div class="grid sm:grid-cols-3 gap-6">
+        <figure class="frame rounded-2xl h-56">
+          <div class="ph">Espacio para imagen<br>ia-web.jpg</div>
+          <img src="iaaa.jpg" alt="Inteligencia artificial en la web" onerror="this.style.display='none'">
+        </figure>
+        <figure class="frame rounded-2xl h-56">
+          <div class="ph">Espacio para imagen<br>webxr.jpg</div>
+          <img src="tt.jpg" alt="Web inmersiva y realidad virtual" onerror="this.style.display='none'">
+        </figure>
+        <figure class="frame rounded-2xl h-56">
+          <div class="ph">Espacio para imagen<br>nube.jpg</div>
+          <img src="nube.jpg" alt="Computación en la nube" onerror="this.style.display='none'">
+        </figure>
+      </div>
+
+      <!-- Preguntas sobre el futuro -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div class="bg-lagoon/30 p-8 rounded-3xl border border-aqua/30 backdrop-blur-md">
+          <h4 class="text-xl font-semibold text-aqua mb-4">¿Cómo influirá en nuestra vida diaria?</h4>
+          <p class="text-bruma leading-relaxed text-sm">
+            Las páginas dejarán de ser iguales para todos: se adaptarán al idioma, a las necesidades y a los hábitos de cada persona. Estudiar, comprar, trabajar o hacer trámites será más rápido y natural, desde el celular o desde un visor de realidad virtual.
+          </p>
+        </div>
+        <div class="bg-sol/10 p-8 rounded-3xl border border-sol/30 backdrop-blur-md">
+          <h4 class="text-xl font-semibold text-sol mb-4">¿Qué pasará con el empleo y la ética?</h4>
+          <p class="text-bruma leading-relaxed text-sm">
+            La IA automatizará tareas repetitivas y aumentará la demanda de perfiles que diseñen, revisen y supervisen sistemas: especialistas en experiencia de usuario, seguridad y accesibilidad. El gran reto será proteger la privacidad y lograr que la web siga siendo inclusiva.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CIERRE ===================== -->
+  <section id="cierre" class="py-20 bg-gradient-to-b from-transparent to-lagoon/30 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-3xl sm:text-4xl font-semibold mb-6">¿Estamos preparados para la web del futuro?</h2>
+      <p class="text-bruma max-w-2xl mx-auto mb-10 leading-relaxed">
+        El futuro no solo sucede: se construye. Quienes aprendan hoy a diseñar, programar y cuidar la calidad de los sitios web serán quienes den forma a la manera en que nos informamos, aprendemos y nos comunicamos.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+       
+        <a href="index.html" class="inline-block px-8 py-4 border border-bruma/50 text-xs font-bold tracking-widest uppercase rounded-full hover:border-sol hover:text-sol transition-colors">Volver al inicio</a>
+      </div>
+    </div>
+  </section>
+
+  
+</body>
+</html>

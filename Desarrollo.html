@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desarrollo Web Moderno — DEVWEB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#07191F; --lagoon:#14505C; --sol:#FFB020; --aqua:#5ED3C8; --text:#E8F1F2; --muted:#9FBFC4; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:90px; }
+  body { margin:0; font-family:'Manrope',sans-serif; color:var(--text); background:radial-gradient(circle at 15% 10%,rgba(94,211,200,.10),transparent 30%),var(--bg); }
+  h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
+  a:focus-visible { outline:2px solid var(--sol); outline-offset:3px; }
+
+  .nav { position:fixed; top:0; width:100%; z-index:50; background:rgba(7,25,31,.88); backdrop-filter:blur(14px); border-bottom:1px solid rgba(94,211,200,.16); }
+  .nav-in { max-width:1100px; height:72px; margin:auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; }
+  .logo { color:var(--sol); text-decoration:none; font:700 20px 'Space Grotesk',sans-serif; letter-spacing:4px; }
+  .menu { display:flex; gap:24px; }
+  .menu a { color:var(--muted); text-decoration:none; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; }
+  .menu a:hover { color:var(--sol); }
+  .btn { display:inline-block; color:var(--sol); border:1px solid rgba(255,176,32,.6); border-radius:30px; padding:11px 20px; text-decoration:none; font-size:11px; font-weight:700; letter-spacing:1.5px; transition:.3s; }
+  .btn:hover { background:var(--sol); color:var(--bg); }
+
+  .hero { padding:170px 24px 90px; text-align:center; }
+  .hero small { color:var(--aqua); font-size:11px; font-weight:700; letter-spacing:3px; }
+  .hero h1 { margin:20px 0; font-size:clamp(42px,7vw,76px); line-height:1; letter-spacing:-2px; }
+  .hero h1 span { color:var(--sol); }
+  .hero p { max-width:680px; margin:0 auto 28px; color:var(--muted); line-height:1.8; }
+
+  main { max-width:1050px; margin:auto; padding:0 24px 80px; }
+  .card { background:linear-gradient(145deg,rgba(20,80,92,.45),rgba(7,25,31,.9)); border:1px solid rgba(94,211,200,.2); border-radius:28px; padding:36px; margin-bottom:28px; }
+  .card h2 { font-size:28px; margin:0 0 10px; }
+  .card h2 span { color:var(--sol); }
+  .card > p { color:var(--muted); line-height:1.8; font-size:15px; margin:0; }
+
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px; }
+  .item { background:rgba(7,25,31,.72); border:1px solid rgba(94,211,200,.14); border-radius:18px; padding:22px; }
+  .item b { color:var(--sol); font:700 24px 'Space Grotesk',sans-serif; }
+  .item h3 { font-size:17px; margin:10px 0 6px; }
+  .item p { color:var(--muted); font-size:13px; line-height:1.7; margin:0; }
+
+  .tags { margin-top:20px; }
+  .tags span { display:inline-block; margin:4px; padding:8px 14px; border:1px solid rgba(94,211,200,.28); border-radius:12px; color:#CFEDEA; font-size:12px; }
+
+  /* Espacios para imágenes: cambia el nombre en src="..." por el de tu archivo */
+  .imgs { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px; }
+  .img { position:relative; height:220px; overflow:hidden; border-radius:18px; border:1px dashed rgba(94,211,200,.4); background:radial-gradient(circle,rgba(94,211,200,.10),transparent 60%),#051217; }
+  .img .ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; color:var(--aqua); font:12px monospace; padding:20px; }
+  .img img { position:relative; width:100%; height:100%; object-fit:cover; display:block; }
+  .img figcaption { position:absolute; left:0; right:0; bottom:0; padding:28px 16px 14px; background:linear-gradient(transparent,rgba(7,25,31,.95)); font-size:13px; font-weight:600; color:var(--sol); }
+  .img { margin:0; }
+
+  footer { border-top:1px solid rgba(94,211,200,.14); padding:32px 20px; text-align:center; color:#6F9097; font-size:12px; }
+  @media (max-width:850px) { .menu { display:none; } .grid,.imgs { grid-template-columns:1fr; } .card { padding:26px; } }
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a href="index.html" class="logo"></a>
+  <div class="menu">
+    <a href="index.html">Inicio</a><a href="sitioweb.html">WEB PROFESIONAL</a><a href="futuro.html">FUTURO DEL DESARROLLO WEB</a><a href="#futuro">Futuro</a>
+  </div>
+  <a href="index.html" class="btn">ENCUESTA</a>
+</div></nav>
+
+<section class="hero" id="inicio">
+  <small>WEB DEVELOPMENT</small>
+  <h1>DESARROLLO<br><span>WEB MODERNO</span></h1>
+  <p>Diseño, programación y servicios en la nube trabajando juntos para crear sitios rápidos, seguros y accesibles en cualquier dispositivo.</p>
+  <a href="Com.html" class="btn">VER MÁS</a>
+</section>
+
+<main>
+
+  <section class="card" id="concepto">
+    <h2>¿Qué es el <span>Desarrollo Web</span>?</h2>
+    <p>Es el proceso de planificar, programar y publicar sitios y aplicaciones que se usan desde el navegador, desde una página informativa hasta tiendas en línea, bancos o plataformas educativas.</p>
+    <div class="grid">
+      <div class="item"><b>01</b><h3>Frontend</h3><p>Lo que el usuario ve: diseño, botones y animaciones con HTML, CSS y JavaScript.</p></div>
+      <div class="item"><b>02</b><h3>Backend</h3><p>Servidores, lógica y bases de datos que trabajan detrás de escena.</p></div>
+      <div class="item"><b>03</b><h3>Full Stack</h3><p>Dominio de ambas partes para construir una aplicación completa.</p></div>
+    </div>
+    <div class="imgs">
+      <figure class="img"><div class="ph">Espacio para imagen<br>web1.jpg</div><img src="front.jpg" alt="Frontend" onerror="this.style.display='none'"><figcaption>Frontend</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>web2.jpg</div><img src="back.jpg" alt="Backend" onerror="this.style.display='none'"><figcaption>Backend</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>web3.jpg</div><img src="full.jpg" alt="Sitio responsive" onerror="this.style.display='none'"><figcaption>Multidispositivo</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card" id="proceso">
+    <h2>Etapas del <span>Desarrollo Web</span></h2>
+    <p>Un sitio profesional se construye por etapas, validando cada una antes de pasar a la siguiente.</p>
+    <div class="grid">
+      <div class="item"><b>01</b><h3>Análisis</h3><p>Se definen objetivos, público y funciones.</p></div>
+      <div class="item"><b>02</b><h3>Diseño UX/UI</h3><p>Prototipos de pantallas, colores y tipografía.</p></div>
+      <div class="item"><b>03</b><h3>Desarrollo</h3><p>Programación de frontend, backend y base de datos.</p></div>
+      <div class="item"><b>04</b><h3>Pruebas</h3><p>Revisión de errores, velocidad y seguridad.</p></div>
+      <div class="item"><b>05</b><h3>Despliegue</h3><p>Publicación en un servidor con dominio y HTTPS.</p></div>
+      <div class="item"><b>06</b><h3>Mantenimiento</h3><p>Actualizaciones y mejoras continuas.</p></div>
+    </div>
+    <div class="imgs">
+      <figure class="img"><div class="ph">Espacio para imagen<br>diseno.jpg</div><img src="diseño pr.jpg" alt="Diseño" onerror="this.style.display='none'"><figcaption>Diseño</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>codigo.jpg</div><img src="progr.jpg" alt="Programación" onerror="this.style.display='none'"><figcaption>Programación</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>despliegue.jpg</div><img src="pub.jpg" alt="Publicación" onerror="this.style.display='none'"><figcaption>Publicación</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card" id="tecnologias">
+    <h2>Tecnologías y <span>Buenas prácticas</span></h2>
+    <p>HTML estructura el contenido, CSS lo estiliza y JavaScript lo hace interactivo. Un buen sitio además es rápido, seguro, accesible y se adapta a cualquier pantalla.</p>
+    <div class="tags">
+      <span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>Tailwind</span><span>Node.js</span><span>Git</span><span>Bases de datos</span><span>Rendimiento</span><span>Seguridad</span><span>Accesibilidad</span><span>Responsive</span>
+    </div>
+    <div class="imgs">
+      <figure class="img"><div class="ph">Espacio para imagen<br>html-css-js.jpg</div><img src="htmlcss.jpg" alt="HTML, CSS y JavaScript" onerror="this.style.display='none'"><figcaption>HTML, CSS y JS</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>frameworks.jpg</div><img src="frame.jpg" alt="Frameworks" onerror="this.style.display='none'"><figcaption>Frameworks</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>seguridad.jpg</div><img src="cibers.jpg" alt="Seguridad web" onerror="this.style.display='none'"><figcaption>Seguridad</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card" id="futuro">
+    <h2>El futuro del <span>Desarrollo Web</span></h2>
+    <p>La inteligencia artificial, las aplicaciones web progresivas y la nube harán que la web sea más rápida, personalizada e inclusiva.</p>
+    <div class="grid">
+      <div class="item"><b>🤖</b><h3>IA</h3><p>Asistentes de código y experiencias personalizadas.</p></div>
+      <div class="item"><b>📲</b><h3>PWA</h3><p>Apps web instalables que funcionan sin conexión.</p></div>
+      <div class="item"><b>☁️</b><h3>Nube</h3><p>Servicios que escalan según la demanda.</p></div>
+    </div>
+    <div class="imgs">
+      <figure class="img"><div class="ph">Espacio para imagen<br>ia-web.jpg</div><img src="IAA.jpg" alt="IA" onerror="this.style.display='none'"><figcaption>IA</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>pwa.jpg</div><img src="PWA.jpg" alt="PWA" onerror="this.style.display='none'"><figcaption>PWA</figcaption></figure>
+      <figure class="img"><div class="ph">Espacio para imagen<br>nube.jpg</div><img src="NUBE.jpg" alt="Nube" onerror="this.style.display='none'"><figcaption>Nube</figcaption></figure>
+    </div>
+    <div style="text-align:center;margin-top:28px"><a href="#inicio" class="btn">VOLVER ARRIBA</a></div>
+  </section>
+
+</main>
+
+<footer>© 2026 | Proyecto Tecnológico DEVWEB</footer>
+</body>
+</html>

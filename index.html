@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEVWEB — Desarrollo Web</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
+          sans: ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+        },
+        colors: {
+          // Nueva paleta: petróleo + lagoon + sol + aqua
+          petroleo: '#0B2A33',   // fondo principal
+          profundo: '#07191F',   // fondo más oscuro
+          lagoon:   '#14505C',   // paneles
+          ola:      '#1E7A85',   // bordes / detalles
+          hielo:    '#E8F1F2',   // texto claro
+          bruma:    '#9FBFC4',   // texto secundario
+          sol:      '#FFB020',   // acento principal
+          solclaro: '#FFC95C',   // hover del acento
+          aqua:     '#5ED3C8',   // acento secundario
+        },
+      },
+    },
+  }
+</script>
+
+<style>
+  html { scroll-padding-top: 96px; }
+  body { font-family: 'Manrope', sans-serif; background-color: #07191F; color: #E8F1F2; }
+  .font-display { font-family: 'Fraunces', serif; }
+
+  .grain::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/></svg>");
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  .nav-link { color: #E8F1F2; opacity: .75; transition: opacity .2s ease, color .2s ease; }
+  .nav-link:hover, .nav-link.active { opacity: 1; }
+  .nav-link.active { color: #FFB020; }
+
+  /* Cursor parpadeante del editor de código */
+  @keyframes blink { 50% { opacity: 0; } }
+  .cursor { display:inline-block; width:8px; height:1.1em; background:#FFB020; vertical-align:-2px; animation: blink 1s steps(1) infinite; }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid #FFB020; outline-offset: 3px; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #07191F; }
+  ::-webkit-scrollbar-thumb { background: #1E7A85; border-radius: 999px; }
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- ============================ HEADER ============================ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-profundo/70 backdrop-blur-md border-b border-white/5">
+  <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+    <a href="#inicio" class="flex items-center gap-3">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <path d="M11 8L4 15L11 22" stroke="#FFB020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 8L26 15L19 22" stroke="#5ED3C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M17 6L13 24" stroke="#E8F1F2" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="leading-none">
+        <span class="block font-display text-lg tracking-[0.2em] text-hielo"></span>
+        <span class="block text-[9px] tracking-[0.25em] text-bruma uppercase"></span>
+      </span>
+    </a>
+
+    <ul class="hidden lg:flex items-center gap-9 text-xs font-semibold tracking-widest uppercase">
+      <li><a href="#desarrollo" data-nav class="nav-link">Desarrollo Web</a></li>
+      <li><a href="#componentes" data-nav class="nav-link">TECNOLOGIA</a></li>
+      <li><a href="#proceso" data-nav class="nav-link">PASO A PASO</a></li>
+      <li><a href="#futuro" data-nav class="nav-link">Futuro</a></li>
+    </ul>
+
+    <a href="Encuesta.html" class="hidden sm:inline-flex items-center gap-2 border border-sol/60 text-hielo text-xs font-semibold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-sol hover:text-profundo transition-colors">
+      Encuesta
+    </a>
+  </nav>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<section id="inicio" class="relative bg-profundo overflow-hidden">
+
+  <!-- Si tienes imagen de fondo, descomenta la línea de abajo y pon tu ruta -->
+  <<img src="frame.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0"> 
+
+  <div class="absolute inset-0 bg-gradient-to-br from-profundo via-petroleo to-lagoon/60 z-0"></div>
+  <div class="absolute -top-32 -right-32 w-[480px] h-[480px] bg-aqua/15 rounded-full blur-[140px]"></div>
+  <div class="absolute bottom-0 -left-24 w-[380px] h-[380px] bg-sol/10 rounded-full blur-[130px]"></div>
+
+  <div class="relative grain z-10">
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pt-40 pb-28 grid lg:grid-cols-2 gap-14 items-center">
+
+      <!-- Texto -->
+      <div>
+        <p class="text-xs font-semibold tracking-[0.3em] uppercase text-aqua">"Cada sitio web empieza con una idea y termina en código."</p>
+        <h1 class="font-display font-semibold mt-6 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] text-hielo">
+          Desarrollo
+          <span class="italic text-sol">Web</span><br>
+          Moderno
+        </h1>
+        <p class="mt-6 max-w-md leading-relaxed text-bruma">
+          Descubre cómo se diseñan, programan y publican las páginas y aplicaciones que usamos todos los días: del primer boceto al sitio en línea.
+        </p>
+        <a href="#desarrollo" class="mt-9 inline-flex items-center gap-2 bg-sol text-profundo text-xs font-bold tracking-widest uppercase px-7 py-4 rounded-full hover:bg-solclaro transition-colors">
+          Explora los temas
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.6"/></svg>
+        </a>
+      </div>
+
+      <!-- Editor de código (elemento principal del hero) -->
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-profundo/80 shadow-2xl">
+        <div class="flex items-center gap-2 px-4 py-3 bg-lagoon/40 border-b border-white/10">
+          <span class="w-3 h-3 rounded-full bg-[#FF6B6B]"></span>
+          <span class="w-3 h-3 rounded-full bg-sol"></span>
+          <span class="w-3 h-3 rounded-full bg-aqua"></span>
+          <span class="ml-3 font-mono text-xs text-bruma">index.html</span>
+        </div>
+        <pre class="font-mono text-[13px] leading-7 p-6 overflow-x-auto"><code><span class="text-bruma">&lt;</span><span class="text-sol">section</span> <span class="text-aqua">class</span><span class="text-bruma">=</span><span class="text-hielo">"hero"</span><span class="text-bruma">&gt;</span>
+  <span class="text-bruma">&lt;</span><span class="text-sol">h1</span><span class="text-bruma">&gt;</span><span class="text-hielo">Hola, mundo</span><span class="text-bruma">&lt;/</span><span class="text-sol">h1</span><span class="text-bruma">&gt;</span>
+  <span class="text-bruma">&lt;</span><span class="text-sol">button</span> <span class="text-aqua">onclick</span><span class="text-bruma">=</span><span class="text-hielo">"publicar()"</span><span class="text-bruma">&gt;</span>
+    <span class="text-hielo">Publicar sitio</span>
+  <span class="text-bruma">&lt;/</span><span class="text-sol">button</span><span class="text-bruma">&gt;</span>
+<span class="text-bruma">&lt;/</span><span class="text-sol">section</span><span class="text-bruma">&gt;</span>
+<span class="cursor"></span></code></pre>
+      </div>
+    </div>
+
+    <!-- Barra de secciones -->
+    <div class="relative max-w-6xl mx-auto px-6 lg:px-10 pb-16 -mt-6">
+      <div class="bg-lagoon/50 backdrop-blur border border-white/10 rounded-2xl grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-white/10 shadow-2xl">
+        <div class="px-8 py-7 text-center sm:text-left">
+          <p class="font-display text-2xl text-hielo">Desarrollo Web</p>
+          <p class="mt-1 text-xs text-bruma tracking-wide">Sección 1</p>
+        </div>
+        <div class="px-8 py-7 text-center sm:text-left">
+          <p class="font-display text-2xl text-hielo">Tecnologías y Funcionamiento</p>
+          <p class="mt-1 text-xs text-bruma tracking-wide">Sección 2</p>
+        </div>
+        <div class="px-8 py-7 text-center sm:text-left">
+          <p class="font-display text-2xl text-hielo">Aplicaciones y Futuro del Desarrollo Web</p>
+          <p class="mt-1 text-xs text-bruma tracking-wide">Sección 3</p>
+        </div>
+        <div class="px-8 py-7 text-center sm:text-left">
+          <p class="font-display text-2xl text-hielo">Encuesta</p>
+          <p class="mt-1 text-xs text-bruma tracking-wide">Sección 4</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ DESARROLLO WEB ============================ -->
+<section id="desarrollo" class="bg-petroleo">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+      <div>
+        <p class="text-xs font-semibold tracking-[0.3em] uppercase text-aqua">La web que usamos a diario</p>
+        <h2 class="font-display text-4xl sm:text-5xl mt-4 max-w-md leading-tight text-hielo">Desarrollo Web</h2>
+      </div>
+      <a href="Desarrollo.html" class="inline-flex items-center gap-2 border border-hielo/25 text-hielo text-xs font-semibold tracking-widest uppercase px-6 py-3.5 rounded-full hover:border-sol hover:text-sol transition-colors self-start">
+        Más información
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+    </div>
+
+    <!-- Tarjeta principal -->
+    <article class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+      <div class="absolute inset-0 bg-gradient-to-br from-profundo via-lagoon/70 to-ola/40"></div>
+      <div class="absolute -top-24 -left-24 w-72 h-72 bg-aqua rounded-full blur-[130px] opacity-25"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-sol rounded-full blur-[150px] opacity-15"></div>
+      <div class="absolute inset-0 opacity-[0.12]"
+           style="background-image: linear-gradient(rgba(94,211,200,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(94,211,200,.5) 1px, transparent 1px); background-size:40px 40px;"></div>
+
+      <div class="relative z-10 p-10 lg:p-14">
+        <span class="inline-block w-fit px-5 py-2 rounded-full bg-sol/15 border border-sol/70 text-sol uppercase tracking-widest text-xs font-bold">
+          Tecnología del Presente
+        </span>
+
+        <h3 class="mt-6 font-display text-5xl md:text-6xl font-semibold leading-tight text-hielo">
+          Desarrollo <span class="italic text-sol">Web</span>
+        </h3>
+
+        <p class="mt-6 max-w-2xl text-lg text-bruma leading-8">
+          El <strong class="text-aqua">desarrollo web</strong> es el proceso de crear sitios y aplicaciones que funcionan en un navegador. Combina estructura (HTML), estilo (CSS) y lógica (JavaScript) con servidores y bases de datos para ofrecer experiencias rápidas, accesibles y disponibles en cualquier dispositivo.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-5 mt-10">
+          <div class="backdrop-blur-xl bg-white/5 border border-aqua/30 rounded-2xl p-6">
+            <div class="font-mono text-2xl text-aqua mb-3">&lt;/&gt;</div>
+            <h4 class="text-aqua font-bold text-lg">Estructura</h4>
+            <p class="text-bruma text-sm mt-2 leading-7">HTML organiza el contenido: títulos, textos, imágenes, enlaces y formularios.</p>
+          </div>
+          <div class="backdrop-blur-xl bg-white/5 border border-sol/30 rounded-2xl p-6">
+            <div class="font-mono text-2xl text-sol mb-3">{ }</div>
+            <h4 class="text-sol font-bold text-lg">Estilo</h4>
+            <p class="text-bruma text-sm mt-2 leading-7">CSS define colores, tipografías y diseño adaptable a celulares, tabletas y computadoras.</p>
+          </div>
+          <div class="backdrop-blur-xl bg-white/5 border border-hielo/30 rounded-2xl p-6">
+            <div class="font-mono text-2xl text-hielo mb-3">( )=&gt;</div>
+            <h4 class="text-hielo font-bold text-lg">Interacción</h4>
+            <p class="text-bruma text-sm mt-2 leading-7">JavaScript responde a los clics y datos del usuario para que la página cobre vida.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================ TECNOLOGÍAS ============================ -->
+<section id="componentes" class="bg-lagoon">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+
+    
+
+    <div class="mb-14">
+      <p class="text-xs font-semibold tracking-[0.3em] uppercase text-aqua">Funcionamiento</p>
+      <h2 class="font-display text-4xl sm:text-5xl mt-4 text-hielo max-w-md leading-tight">Componentes principales</h2>
+    </div>
+
+    
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- Frontend -->
+       
+      <div class="bg-petroleo rounded-3xl overflow-hidden border border-white/10 shadow-xl hover:-translate-y-1 transition duration-300">
+        <div class="h-52 flex items-center justify-center bg-gradient-to-br from-profundo to-ola/50">
+          <span class="font-mono text-5xl text-sol">&lt;html&gt;</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-hielo mb-3">Frontend</h3>
+          <p class="text-bruma text-sm leading-7">Es la parte visible del sitio. Muestra contenido y diseño en el navegador y responde a lo que hace el usuario.</p>
+        </div>
+      </div>
+
+      <!-- Backend -->
+      <div class="bg-petroleo rounded-3xl overflow-hidden border border-white/10 shadow-xl hover:-translate-y-1 transition duration-300">
+        <div class="h-52 flex items-center justify-center bg-gradient-to-br from-profundo to-ola/50">
+          <span class="font-mono text-5xl text-aqua">API</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-hielo mb-3">Backend</h3>
+          <p class="text-bruma text-sm leading-7">Es el servidor que procesa solicitudes, aplica la lógica del negocio y protege el acceso a los datos.</p>
+        </div>
+      </div>
+
+      <!-- Bases de datos -->
+      <div class="bg-petroleo rounded-3xl overflow-hidden border border-white/10 shadow-xl hover:-translate-y-1 transition duration-300">
+        <div class="h-52 flex items-center justify-center bg-gradient-to-br from-profundo to-ola/50">
+          <span class="font-mono text-5xl text-hielo">SQL</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-hielo mb-3">Bases de datos</h3>
+          <p class="text-bruma text-sm leading-7">Guardan y organizan la información de usuarios, productos y contenidos para consultarla rápidamente.</p>
+        </div>
+      </div>
+
+      <!-- Despliegue -->
+      <div class="bg-petroleo rounded-3xl overflow-hidden border border-white/10 shadow-xl hover:-translate-y-1 transition duration-300">
+        <div class="h-52 flex items-center justify-center bg-gradient-to-br from-profundo to-ola/50">
+          <span class="font-mono text-5xl text-sol">git</span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-hielo mb-3">Despliegue</h3>
+          <p class="text-bruma text-sm leading-7">Publica el sitio en un servidor o la nube, con control de versiones para trabajar en equipo sin perder cambios.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROCESO ============================ -->
+<section id="proceso" class="relative overflow-hidden bg-profundo">
+  <div class="absolute inset-0 bg-gradient-to-r from-profundo via-petroleo to-lagoon/60"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-24">
+    <p class="text-xs font-semibold tracking-[0.3em] uppercase text-aqua">Web Process</p>
+
+    <div class="mt-4 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+      <h2 class="font-display text-4xl sm:text-5xl max-w-2xl leading-tight text-hielo">
+        El desarrollo de un <span class="italic text-sol">sitio web profesional</span>
+      </h2>
+      <a href="sitioweb.html" class="inline-flex items-center gap-2 border border-aqua text-xs font-semibold tracking-widest uppercase px-6 py-3.5 rounded-full hover:bg-aqua hover:text-profundo transition-colors self-start text-aqua">
+        Conocer más
+      </a>
+    </div>
+
+    <ol class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-14">
+      <li class="bg-petroleo/80 border border-white/10 rounded-2xl p-6">
+        <span class="font-display text-3xl text-sol">1</span>
+        <h3 class="mt-3 font-bold text-hielo">Planificación</h3>
+        <p class="mt-2 text-sm text-bruma leading-6">Se definen objetivos, público y funciones que tendrá el sitio.</p>
+      </li>
+      <li class="bg-petroleo/80 border border-white/10 rounded-2xl p-6">
+        <span class="font-display text-3xl text-sol">2</span>
+        <h3 class="mt-3 font-bold text-hielo">Diseño</h3>
+        <p class="mt-2 text-sm text-bruma leading-6">Se crean bocetos y prototipos de cada pantalla.</p>
+      </li>
+      <li class="bg-petroleo/80 border border-white/10 rounded-2xl p-6">
+        <span class="font-display text-3xl text-sol">3</span>
+        <h3 class="mt-3 font-bold text-hielo">Desarrollo</h3>
+        <p class="mt-2 text-sm text-bruma leading-6">Se programa el frontend, el backend y la base de datos.</p>
+      </li>
+      <li class="bg-petroleo/80 border border-white/10 rounded-2xl p-6">
+        <span class="font-display text-3xl text-sol">4</span>
+        <h3 class="mt-3 font-bold text-hielo">Pruebas</h3>
+        <p class="mt-2 text-sm text-bruma leading-6">Se buscan errores y se revisa velocidad, seguridad y compatibilidad.</p>
+      </li>
+      <li class="bg-petroleo/80 border border-white/10 rounded-2xl p-6">
+        <span class="font-display text-3xl text-sol">5</span>
+        <h3 class="mt-3 font-bold text-hielo">Publicación</h3>
+        <p class="mt-2 text-sm text-bruma leading-6">El sitio sale a internet y se mantiene con actualizaciones.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================ FUTURO ============================ -->
+<section id="futuro" class="relative overflow-hidden bg-petroleo">
+  <div class="absolute inset-0 bg-gradient-to-r from-profundo/90 via-petroleo to-lagoon/50"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-28">
+    <p class="text-xs font-semibold tracking-[0.3em] uppercase text-aqua">Web Future</p>
+
+    <div class="mt-4 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+      <div class="max-w-3xl">
+        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight text-hielo">
+          Desarrollo web <span class="italic text-sol">del futuro</span>
+        </h2>
+        <p class="mt-6 max-w-2xl text-bruma text-base lg:text-lg leading-8">
+          La inteligencia artificial, las aplicaciones web progresivas y los nuevos estándares del navegador están cambiando la manera de construir sitios. Estas tecnologías permiten crear productos más rápidos, accesibles y personalizados en sectores como la educación, la salud, el comercio y los servicios financieros.
+        </p>
+      </div>
+
+      <a href="futuro.html" class="inline-flex items-center gap-3 border border-sol text-xs font-semibold tracking-widest uppercase px-7 py-4 rounded-full text-sol hover:bg-sol hover:text-profundo transition-colors self-start lg:self-end">
+        Ver paso a paso
+        <span class="text-lg">→</span>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-14">
+      <div class="bg-profundo/70 backdrop-blur-md border border-aqua/20 rounded-2xl p-7 hover:border-aqua/60 transition-colors">
+        <div class="text-4xl mb-5">🤖</div>
+        <h3 class="text-xl font-bold text-aqua mb-3">Inteligencia Artificial</h3>
+        <p class="text-sm text-bruma leading-7">Asistentes de código, chatbots y recomendaciones personalizadas agilizan el trabajo y mejoran la experiencia del usuario.</p>
+      </div>
+      <div class="bg-profundo/70 backdrop-blur-md border border-aqua/20 rounded-2xl p-7 hover:border-aqua/60 transition-colors">
+        <div class="text-4xl mb-5">⚡</div>
+        <h3 class="text-xl font-bold text-aqua mb-3">Rendimiento</h3>
+        <p class="text-sm text-bruma leading-7">Las PWA y WebAssembly acercan las aplicaciones web a la velocidad de las aplicaciones nativas, incluso sin conexión.</p>
+      </div>
+      <div class="bg-profundo/70 backdrop-blur-md border border-aqua/20 rounded-2xl p-7 hover:border-aqua/60 transition-colors">
+        <div class="text-4xl mb-5">♿</div>
+        <h3 class="text-xl font-bold text-aqua mb-3">Accesibilidad</h3>
+        <p class="text-sm text-bruma leading-7">Diseñar para todas las personas, con teclado, lectores de pantalla y buen contraste, es un estándar cada vez más exigido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="relative overflow-hidden bg-profundo">
+  <div class="absolute top-0 left-0 w-[450px] h-[450px] bg-aqua/15 rounded-full blur-[180px]"></div>
+  <div class="absolute bottom-0 right-0 w-[450px] h-[450px] bg-sol/10 rounded-full blur-[180px]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 py-24">
+    <div class="max-w-6xl mx-auto bg-lagoon/30 backdrop-blur-2xl rounded-[35px] border border-aqua/20 shadow-2xl p-8 lg:p-12">
+
+      <div class="text-center mb-16">
+        <span class="text-aqua uppercase tracking-[0.35em] text-sm font-semibold">Conclusión General</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-semibold text-hielo mt-5">
+          Frontend <span class="text-sol">&amp;</span> Backend
+        </h2>
+        <div class="w-40 h-1 bg-gradient-to-r from-sol to-aqua rounded-full mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-10">
+        <div class="bg-white/5 rounded-3xl border border-aqua/20 p-8 hover:border-aqua transition duration-500">
+          <div class="text-6xl mb-5">🖥️</div>
+          <h3 class="text-2xl font-bold text-aqua mb-4">Frontend</h3>
+          <p class="text-bruma leading-8">
+            El frontend construye lo que el usuario ve y toca. Con HTML, CSS y JavaScript crea interfaces claras, adaptables y atractivas en cualquier dispositivo.
+          </p>
+        </div>
+
+        <div class="bg-white/5 rounded-3xl border border-sol/20 p-8 hover:border-sol transition duration-500">
+          <div class="text-6xl mb-5">🗄️</div>
+          <h3 class="text-2xl font-bold text-sol mb-4">Backend</h3>
+          <p class="text-bruma leading-8">
+            El backend trabaja detrás de escena: gestiona servidores, bases de datos y seguridad para que la información llegue correcta y protegida a cada usuario.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-14 border-t border-aqua/20 pt-10">
+        <p class="text-center text-bruma text-lg leading-9 max-w-4xl mx-auto">
+          La unión entre el
+          <span class="text-aqua font-semibold">frontend</span>
+          y el
+          <span class="text-sol font-semibold">backend</span>
+          hace posible la web actual. Dominar ambas partes, junto con buenas prácticas de diseño, seguridad y accesibilidad, permite crear productos digitales que mejoran la vida de las personas y transforman la forma en que nos comunicamos, aprendemos y trabajamos.
+        </p>
+      </div>
+    </div>
+
+    
+
+  </div>
+</footer>
+
+<script>
+  const links = document.querySelectorAll('[data-nav]');
+  const ids = ['inicio', 'desarrollo', 'componentes', 'proceso', 'futuro'];
+  const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(sec => observer.observe(sec));
+</script>
+</body>
+</html>
